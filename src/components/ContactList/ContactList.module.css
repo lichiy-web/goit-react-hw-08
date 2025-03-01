@@ -1,0 +1,19 @@
+.contactList {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ overflow: visible;
+ overflow-y: scroll;
+ padding: 1em;
+}
+
+
+.contactList::-webkit-scrollbar {
+    width: 10px;
+    background-color: #c5c5c5;
+}
+
+.contactList::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--btn-scroll-light), var(--btn-scroll-dark));
+    border-radius: 5px;
+}

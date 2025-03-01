@@ -1,0 +1,88 @@
+.contactItem {
+    border-radius: 5px;
+    margin-bottom: 1em;
+    display:flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    box-sizing: border-box;
+    
+    font-weight: 400;
+    
+    box-shadow: 0.1em 0 1em var(--shadow-color) ;
+    color: var(--color);
+    cursor: pointer;
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    /* max-width: 60%; */
+    max-width: 70%;
+}
+
+.infoItem {
+    display: inline-flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.contactNameIcon {
+    display: flex;
+    place-items: center;
+    color:blue;
+    width: 1em;
+    height: 1em;
+}
+
+.contactName {
+    /* line-height: 1.2; */
+    font-family: 'Arial';
+    /* word-break: normal; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contactItem:focus {
+    outline: 2px solid var(--btn-scroll-dark);
+    color: var(--black);
+
+}
+
+.contactItem:focus .contactName {
+    white-space: unset;
+    word-break: break-all;
+}
+
+.contactPhoneIcon {
+    color: green;
+}
+
+.contactBtnItem {
+    display: flex;
+    place-items: center;
+    max-width: 30%;
+}
+
+.btn {
+    padding: 0.3em .5em;
+    text-align: center;
+    font-weight: 400;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    max-width: max-content;
+    font-weight: 400;
+    color: var(--btn-color);
+    background: linear-gradient(90deg, var(--btn-background-dark-color), var(--btn-background-light-color));
+    /* background: linear-gradient(90deg, var(--btn-delete-dark), var(--btn-delete-light)); */
+    /* background-color: var(--btn-background-light-color); */
+}
+
+.btn:hover {
+    background: linear-gradient(270deg, var(--btn-background-dark-color), var(--btn-background-light-color));
+
+    /* background: linear-gradient(270deg, var(--btn-delete-dark), var(--btn-delete-light)); */
+    filter: brightness(120%);
+}
+

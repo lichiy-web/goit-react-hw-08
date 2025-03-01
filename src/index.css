@@ -1,3 +1,18 @@
+/* Light green color scheme */
+:root {
+  --color: #9E9E9E;
+  /* --color: #8E8E8E; */
+  --black: #213547;
+  --gray: #757575;
+  /* --shadow-color: #d0d0d0; */
+  --shadow-color: #b0b0b0;
+  --btn-color: #D6FFDD;
+  --btn-background-dark-color: #006E10;
+  --btn-background-light-color: #01AF19;
+  --btn-scroll-dark: #e59700;
+  --btn-scroll-light: #e2bd00;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,6 +38,7 @@ a:hover {
 }
 
 body {
+  box-sizing: border-box;
   margin: 0;
   display: flex;
   /* place-items: center; */
@@ -59,7 +75,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: var(--black);
     background-color: #ffffff;
   }
   a:hover {
