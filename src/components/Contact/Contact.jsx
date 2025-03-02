@@ -3,10 +3,9 @@ import css from './Contact.module.css';
 import { FaPhone } from 'react-icons/fa6';
 import { RiUser3Fill } from 'react-icons/ri';
 import { normalizePhoneNumber } from './Contact.js';
-// import { deleteContact } from '../../redux/contactsSlice.js';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsOps.js';
+import { deleteContact } from '../../redux/contacts/operations.js';
 
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();

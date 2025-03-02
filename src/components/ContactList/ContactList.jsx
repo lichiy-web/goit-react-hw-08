@@ -5,7 +5,7 @@ import Notification from '../Notification/Notification.jsx';
 import {
   selectContacts,
   selectFilteredContacts,
-} from '../../redux/contactsSlice.js';
+} from '../../redux/contacts/selectors.js';
 
 const ContactList = () => {
   const contactList = useSelector(selectContacts);

@@ -1,16 +1,6 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./contactsOps";
-import { selectNameFilter } from "./filtersSlice";
+import { createSlice } from "@reduxjs/toolkit";
+import { addContact, deleteContact, fetchContacts } from "./operations";
 
-export const selectContacts = state => state.contacts.items;
-export const selectLoading = state => state.contacts.loading;
-export const selectError = state => state.contacts.error;
-export const selectFilteredContacts = createSelector(
-    [selectContacts, selectNameFilter],
-    (contactList, searchQuery) => contactList.filter(({ name }) =>
-        name.trim().toLowerCase().includes(searchQuery.trim().toLowerCase())
-    )
-)
 
 const initialState = {
     items: [],
@@ -23,7 +13,7 @@ const slice = createSlice({
     initialState,
     extraReducers: builder => {
         builder
-            .addCase(fetchContacts.pending, (state, action) => {
+            .addCase(fetchContacts.pending, state => {
                 state.loading = true;
             })
             .addCase(fetchContacts.fulfilled, (state, action) => {
@@ -36,7 +26,7 @@ const slice = createSlice({
                 if (action.payload === "canceled") return;
                 state.error = action.payload;
             })
-            .addCase(addContact.pending, (state, action) => {
+            .addCase(addContact.pending, state => {
                 state.loading = true;                
             })
             .addCase(addContact.fulfilled, (state, action) => {
@@ -47,7 +37,7 @@ const slice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(deleteContact.pending, (state, action) => {
+            .addCase(deleteContact.pending, state => {
                 state.loading = true;
             })
             .addCase(deleteContact.fulfilled, (state, action) => {
