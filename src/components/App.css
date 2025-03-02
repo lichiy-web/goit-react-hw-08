@@ -12,14 +12,15 @@
 
 .main-container {
   padding: 0 1em 1em 1em;
-  max-width: 30em;
+  max-width: 50em;
+  width: 70%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1.2em;
   overflow: visible;
-  justify-content: center;
+  justify-content: start;
 }
 
 #root::-webkit-scrollbar {

@@ -1,7 +1,6 @@
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchContacts } from '../redux/contacts/operations';
 import HomePage from '../pages/HomePage';
 import { Route, Routes } from 'react-router-dom';
 import RegistrationPage from '../pages/RegistrationPage';
@@ -9,14 +8,15 @@ import LoginPage from '../pages/LoginPage';
 import ContactsPage from '../pages/ContactsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Layout from './Layout';
+import { RestrictedRoute } from './RestrictedRoute';
+import { PrivateRoute } from './PrivateRoute';
+import { refreshUser } from '../redux/auth/operations';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const abortController = new AbortController();
-    dispatch(fetchContacts(abortController.signal));
-    return () => abortController.abort();
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
@@ -24,9 +24,30 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="register" element={<RegistrationPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="contacts" element={<ContactsPage />} />
+          <Route
+            path="register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegistrationPage />}
+              />
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+            }
+          />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

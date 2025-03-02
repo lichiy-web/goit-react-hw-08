@@ -9,7 +9,9 @@ const UserMenu = () => {
   return (
     <div className={css.userMenuWrapper}>
       <p className={css.welcomeUser}>Welcome, {user.name}!</p>
-      <button onClick={() => dispatch(logOut())}>Logout</button>
+      <button className={css.logoutBtn} onClick={() => dispatch(logOut())}>
+        Logout
+      </button>
     </div>
   );
 };

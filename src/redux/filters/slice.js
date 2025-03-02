@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logOut } from "../auth/operations";
 
 const initialState = {    
     name: ""
@@ -11,6 +12,9 @@ const slice = createSlice({
         changeFilter: (state, action) => {
             state.name = action.payload;
         }
+    },
+    extraReducers: builder => {
+        builder.addCase(logOut.fulfilled, () => initialState)
     }
 })
 

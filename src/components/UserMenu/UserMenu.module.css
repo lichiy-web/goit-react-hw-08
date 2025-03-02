@@ -1,0 +1,24 @@
+.userMenuWrapper {
+    display: flex;
+    gap:.5em;
+    font-size: 0.8em;
+    align-items: center;
+}
+
+.logoutBtn {
+    padding: 0.3em .5em;
+        text-align: center;
+        font-weight: 400;
+        border: 0;
+        border-radius: 5px;
+        width: 100%;
+        max-width: max-content;
+        font-weight: 400;
+        color: var(--btn-color);
+        background: linear-gradient(90deg, var(--btn-background-dark-color), var(--btn-background-light-color));
+
+}
+
+.logoutBtn:hover {
+    filter: brightness(120%);
+}

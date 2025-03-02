@@ -6,25 +6,25 @@ const configAuthAPI = {
   timeout: 1000,
 };
 
-const authAPI = axios.create(configAuthAPI);
+export const api = axios.create(configAuthAPI);
 
 // Utility to add JWT
 const setAuthHeader = token => {
-  authAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+  api.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 // Utility to remove JWT
 const clearAuthHeader = () => {
-  authAPI.defaults.headers.common.Authorization = '';
+  api.defaults.headers.common.Authorization = '';
 };
 
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) =>
-    authAPI
+    api
       .post('/users/signup', credentials)
       .then(({ data }) => {
-        console.log('Register response data: ', data);
+        // console.log('Register response data: ', data);
         setAuthHeader(data.token);
         return data;
       })
@@ -34,10 +34,10 @@ export const register = createAsyncThunk(
 export const logIn = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) =>
-    authAPI
+    api
       .post('/users/login', credentials)
       .then(({ data }) => {
-        console.log('Login response data: ', data);
+        // console.log('Login response data: ', data);
         setAuthHeader(data.token);
         return data;
       })
@@ -45,7 +45,7 @@ export const logIn = createAsyncThunk(
 );
 
 export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
-  authAPI
+  api
     .post('/users/logout')
     .then(() => clearAuthHeader())
     .catch(error => thunkAPI.rejectWithValue(error.message))
@@ -54,10 +54,12 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 export const refreshUser = createAsyncThunk('auth/refresh', (_, thunkAPI) => {
   const state = thunkAPI.getState();
   const storedToken = state.auth.token;
+  // console.log('refreshUser storedToken: ', storedToken);
 
   if (!storedToken) return thunkAPI.rejectWithValue("User isn't logged in.");
 
-  return authAPI
+  setAuthHeader(storedToken);
+  return api
     .get('/users/current')
     .then(({ data }) => data)
     .catch(error => thunkAPI.rejectWithValue(error.message));
