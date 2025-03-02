@@ -48,7 +48,7 @@ const LoginForm = () => {
           />
         </label>
         <label className={css.authItem}>
-          <span className={css.inputLabel}>Name</span>
+          <span className={css.inputLabel}>Password</span>
           <Field
             className={css.inputItem}
             type="password"
