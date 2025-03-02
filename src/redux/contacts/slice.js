@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
 import { logIn, logOut, refreshUser, register } from "../auth/operations";
+import toast from "react-hot-toast";
 
 const handlePending = state => {    
                 state.loading = true;
@@ -52,7 +53,14 @@ const slice = createSlice({
             .addCase(register.rejected, handleReject)
             .addCase(logIn.pending, handlePending)
             .addCase(logIn.fulfilled, handleAuthSuccess)
-            .addCase(logIn.rejected, handleReject)
+            .addCase(logIn.rejected, (state, { payload }) => {
+                state.loading = false;
+                if (payload === 'Request failed with status code 400') {
+                    toast.error("Wrong email or password");
+                    return state;
+                }
+                state.error = payload;
+            })
             .addCase(logOut.pending, handlePending)
             .addCase(logOut.fulfilled, () => initialState)
             .addCase(logOut.rejected, handleReject)
