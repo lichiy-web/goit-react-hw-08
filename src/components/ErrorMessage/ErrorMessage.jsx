@@ -1,9 +1,5 @@
-import { lazy } from 'react';
 import css from './ErrorMessage.module.css';
-// import errImg from '../../assets/img/fetchError01-transparent.png';
-const errImg = lazy(() =>
-  import('../../assets/img/fetchError01-transparent.png')
-);
+import errImg from '../../assets/img/fetchError01-transparent.png';
 // console.log('img = ', errImg);
 const ErrorMessage = () => {
   return (

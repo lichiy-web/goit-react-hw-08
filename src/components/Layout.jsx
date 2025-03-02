@@ -12,6 +12,7 @@ const Layout = () => {
     <>
       <AppBar />
       {error ? <ErrorMessage /> : <Outlet />}
+
       <Loader isLoading={loading} />
     </>
   );

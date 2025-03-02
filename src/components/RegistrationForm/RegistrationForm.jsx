@@ -25,7 +25,6 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (credentials, options) => {
-    console.log(credentials);
     dispatch(register(credentials));
     options.resetForm();
   };

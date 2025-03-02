@@ -2,6 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
 import { logIn, logOut, refreshUser, register } from "../auth/operations";
 
+const handlePending = state => {    
+                state.loading = true;
+            }
+
+const handleReject = (state, action) => {
+                state.loading = false;
+                if (action.payload === "canceled") return state;
+                state.error = action.payload;
+}
+
+const handleAuthSuccess = state => {
+                state.error = null;
+                state.loading = false;
+            }
 
 const initialState = {
     items: [],
@@ -14,85 +28,39 @@ const slice = createSlice({
     initialState,
     extraReducers: builder => {
         builder
-            .addCase(fetchContacts.pending, state => {
-                state.loading = true;
-            })
+            .addCase(fetchContacts.pending, handlePending)
             .addCase(fetchContacts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
                 state.items = action.payload;
             })
-            .addCase(fetchContacts.rejected, (state, action) => {
-                state.loading = false;
-                if (action.payload === "canceled") return;
-                state.error = action.payload;
-            })
-            .addCase(addContact.pending, state => {
-                state.loading = true;                
-            })
+            .addCase(fetchContacts.rejected, handleReject)
+            .addCase(addContact.pending, handlePending)
             .addCase(addContact.fulfilled, (state, action) => {
                 state.loading = false;
                 state.items.push(action.payload);
             })
-            .addCase(addContact.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            })
-            .addCase(deleteContact.pending, state => {
-                state.loading = true;
-            })
+            .addCase(addContact.rejected, handleReject)
+            .addCase(deleteContact.pending, handlePending)
             .addCase(deleteContact.fulfilled, (state, action) => {
                 state.loading = false;
                 state.items = state.items.filter(item => item.id !== action.payload);
             })
-            .addCase(deleteContact.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            })
-            .addCase(register.pending, state => {
-                state.error = null;
-                state.loading = true;
-            })
-            .addCase(register.fulfilled, state => {
-                state.error = null;
-                state.loading = false;
-            } )
-            .addCase(register.rejected, (state, { payload }) => {
-                state.error = payload;
-                state.loading = false;
-            })
-            .addCase(logIn.pending, state => {
-                state.error = null;
-                state.loading = true;
-            })
-            .addCase(logIn.fulfilled, state => {
-                state.error = null;
-                state.loading = false;
-            } )
-            .addCase(logIn.rejected, (state, { payload }) => {
-                state.error = payload;
-                state.loading = false;
-            })
-            .addCase(logOut.pending, state => {
-                state.error = null;
-                state.loading = true;
-            })
+            .addCase(deleteContact.rejected, handleReject)
+            .addCase(register.pending, handlePending)
+            .addCase(register.fulfilled, handleAuthSuccess)
+            .addCase(register.rejected, handleReject)
+            .addCase(logIn.pending, handlePending)
+            .addCase(logIn.fulfilled, handleAuthSuccess)
+            .addCase(logIn.rejected, handleReject)
+            .addCase(logOut.pending, handlePending)
             .addCase(logOut.fulfilled, () => initialState)
-            .addCase(logOut.rejected, (state, { payload }) => {
-                state.error = payload;
-                state.loading = false;
-            })
-            .addCase(refreshUser.pending, state => {
-                state.error = null;
-                state.loading = true;
-            })
-            .addCase(refreshUser.fulfilled, state => {
-                state.error = null;
-                state.loading = false;
-            } )
+            .addCase(logOut.rejected, handleReject)
+            .addCase(refreshUser.pending, handlePending)
+            .addCase(refreshUser.fulfilled, handleAuthSuccess)
             .addCase(refreshUser.rejected, (state, { payload }) => {
-                state.error = payload;
-                state.loading = false;
+                if (payload === "User isn't logged in") return initialState;           
+                handleReject(state, { payload });
             })
         
     }
