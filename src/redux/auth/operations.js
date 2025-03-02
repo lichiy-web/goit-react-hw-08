@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const configAuthAPI = {
+const configAPI = {
   baseURL: 'https://connections-api.goit.global',
-  timeout: 1000,
+  timeout: 4000,
 };
 
-export const api = axios.create(configAuthAPI);
+export const api = axios.create(configAPI);
 
 // Utility to add JWT
 const setAuthHeader = token => {
@@ -24,7 +24,6 @@ export const register = createAsyncThunk(
     api
       .post('/users/signup', credentials)
       .then(({ data }) => {
-        // console.log('Register response data: ', data);
         setAuthHeader(data.token);
         return data;
       })
@@ -37,7 +36,6 @@ export const logIn = createAsyncThunk(
     api
       .post('/users/login', credentials)
       .then(({ data }) => {
-        // console.log('Login response data: ', data);
         setAuthHeader(data.token);
         return data;
       })
@@ -54,7 +52,6 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 export const refreshUser = createAsyncThunk('auth/refresh', (_, thunkAPI) => {
   const state = thunkAPI.getState();
   const storedToken = state.auth.token;
-  // console.log('refreshUser storedToken: ', storedToken);
 
   if (!storedToken) return thunkAPI.rejectWithValue("User isn't logged in.");
 
