@@ -47,7 +47,12 @@ const RegistrationForm = () => {
         </label>
         <label className={css.authItem}>
           <span className={css.inputLabel}>Email</span>
-          <Field className={css.inputItem} type="text" name="email" />
+          <Field
+            className={css.inputItem}
+            type="text"
+            name="email"
+            autoComplete="new-email"
+          />
           <ErrorMessage
             className={css.errorMessage}
             name="email"
@@ -56,7 +61,12 @@ const RegistrationForm = () => {
         </label>
         <label className={css.authItem}>
           <span className={css.inputLabel}>Password</span>
-          <Field className={css.inputItem} type="password" name="password" />
+          <Field
+            className={css.inputItem}
+            type="password"
+            name="password"
+            autoComplete="new-password"
+          />
           <ErrorMessage
             className={css.errorMessage}
             name="password"
